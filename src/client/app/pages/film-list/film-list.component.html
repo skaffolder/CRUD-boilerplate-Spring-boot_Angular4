@@ -1,0 +1,85 @@
+<!-- TITLE -->
+<mat-card class="mb-40">
+    <h1>Film List</h1>
+</mat-card>
+
+<!-- SEARCH FORM -->
+<mat-card>
+    
+    <div class="card-title">
+        <mat-icon>search</mat-icon>
+        Search
+    </div>
+        
+    <form name="form-search" class="container-fluid">
+
+        <div class="row">
+                <div class="col-sm-6">
+                    <mat-form-field class="full-width">
+                        <mat-select placeholder="Genre" class="full-width" [(ngModel)]="search.genre" name="genre" id="genre">
+                            <mat-option></mat-option>
+                            <mat-option value="Action">Action</mat-option>
+                            <mat-option value="Crime">Crime</mat-option>
+                            <mat-option value="Fantasy">Fantasy</mat-option>
+                            <mat-option value="Horror">Horror</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="clearfix"></div>
+			
+                <div class="col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input matInput type="text" placeholder="Title" [(ngModel)]="search.title" name="title" id="title">
+                    </mat-form-field>
+                </div>
+			
+                <div class="col-sm-6">
+                    <mat-form-field class="full-width">
+                        <input matInput type="number" placeholder="Year" [(ngModel)]="search.year" name="year" id="year">
+                    </mat-form-field>
+                </div>
+        </div>
+
+    </form>
+</mat-card>
+
+<!-- TABLE -->
+<table class="table table-hover mt-40">
+    <thead>
+        <tr>
+            <th>_id</th>
+            <th>genre</th>
+            <th>title</th>
+            <th>year</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list | search: { 'genre': search.genre, 'title': search.title, 'year': search.year }">
+            <td><a [routerLink]="['/films', item._id]">{{item._id}}</a></td>
+            
+            <!-- ATTRIBUTES -->
+            
+            <td>{{item.genre }}</td>
+            <td>{{item.title }}</td>
+            <td>{{item.year }}</td>
+            
+            <!-- DELETE BUTTON -->
+            <td>
+                <button mat-icon-button (click)="openModal(item._id, modal)" class="mt--10">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <div class="no-result" *ngIf="(list | search: {  'genre': search.genre ,  'title': search.title ,  'year': search.year  }).length == 0">
+        No items found
+    </div>
+</table>
+
+<!-- BUTTON -->
+<button class="btn btn-primary pull-right mb-20" routerLink="/films/new" mat-fab color="primary">
+    <mat-icon>add</mat-icon>
+</button>
+
+<div class="clearfix"></div>

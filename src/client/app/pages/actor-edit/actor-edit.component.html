@@ -1,0 +1,48 @@
+<!-- TITLE -->
+<mat-card class="mb-40">
+    <h1>Actor Edit</h1>
+</mat-card>
+
+<mat-card>
+    <div class="card-title">
+        <mat-icon>edit</mat-icon>
+        Edit
+    </div>
+
+    <form #easyForm="ngForm" class="container-fluid">
+        
+        
+        <mat-form-field class="full-width">
+            <input matInput type="date" placeholder="BirthDate" [ngModel]="item.birthDate | date: 'y-MM-dd'"  (ngModelChange)="item.birthDate = $event" name="birthDate" id="birthDate" >
+        </mat-form-field>
+        
+        
+        <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="Name" [(ngModel)]="item.name"  name="name" id="name" required>
+        </mat-form-field>
+        
+        
+        <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="Surname" [(ngModel)]="item.surname"  name="surname" id="surname" >
+        </mat-form-field>
+        
+        <!-- RELATIONS -->
+        
+        
+        
+        <h2 *ngIf="externalFilm[0]">External Relations</h2>
+        
+			<h3 *ngIf="externalFilm[0]">Film</h3>
+			<mat-list>
+                <mat-list-item *ngFor="let item of externalFilm">{{item._id}}</mat-list-item>
+            </mat-list>
+
+
+        <!-- BUTTON BAR -->
+        <div class="mt-40">
+            <button mat-raised-button color="primary" class="pull-right mr-5" (click)="save(easyForm.valid, item)">Save</button>
+            <button mat-raised-button class="pull-right " (click)="goBack()">Back To List</button>
+        </div>
+    </form>
+
+</mat-card>

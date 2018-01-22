@@ -1,0 +1,25 @@
+
+<beans 
+    xmlns               = "http://www.springframework.org/schema/beans"
+    xmlns:context       = "http://www.springframework.org/schema/context"
+    xmlns:mvc           = "http://www.springframework.org/schema/mvc" 
+    xmlns:xsi           = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation  = "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <mvc:annotation-driven/>
+	
+	<context:component-scan base-package="com.manage_film_example.*" />
+    <context:property-placeholder location="WEB-INF/application.properties"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${db.Manage_Film_Example_db.driverClassName}"/>
+        <property name="url" value="${db.Manage_Film_Example_db.url}"/>
+        <property name="username" value="${db.Manage_Film_Example_db.username}"/>
+        <property name="password" value="${db.Manage_Film_Example_db.password}"/>
+    </bean>
+
+	<import resource="spring/security.xml"/>
+	
+</beans>
+

@@ -1,0 +1,83 @@
+<!-- TITLE -->
+<mat-card class="mb-40">
+    <h1>Film Edit</h1>
+</mat-card>
+
+<mat-card>
+    <div class="card-title">
+        <mat-icon>edit</mat-icon>
+        Edit
+    </div>
+
+    <form #easyForm="ngForm" class="container-fluid">
+        
+        <mat-form-field class="full-width">
+            <mat-select placeholder="Genre" class="full-width" [(ngModel)]="item.genre" name="genre" id="genre">
+                <mat-option></mat-option>
+                <mat-option value="Action">Action</mat-option>
+                <mat-option value="Crime">Crime</mat-option>
+                <mat-option value="Fantasy">Fantasy</mat-option>
+                <mat-option value="Horror">Horror</mat-option>
+            <div class="clearfix"></div>
+            </mat-select>
+        </mat-form-field>
+            
+        
+        
+        <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="Title" [(ngModel)]="item.title"  name="title" id="title" required>
+        </mat-form-field>
+        
+        
+        <mat-form-field class="full-width">
+            <input matInput type="number" placeholder="Year" [(ngModel)]="item.year"  name="year" id="year" >
+        </mat-form-field>
+        
+        <!-- RELATIONS -->
+        <h2 class="mb-20">Relations</h2>
+        
+        
+            <div>
+            <label class="mr-10">cast</label>
+            <button mat-mini-fab [matMenuTriggerFor]="actor" color="primary">
+                <mat-icon>add</mat-icon>            
+                <mat-menu #actor="matMenu">
+                    <button mat-menu-item *ngFor="let item of listCast" [disabled]="containActor(item._id) ? true : false" href="#" (click)="$event.preventDefault(); containActor(item._id) || addActor(item._id)">{{item._id}}</button>
+                </mat-menu>
+            </button>
+        </div>
+        <mat-list>
+            <mat-list-item *ngFor="let obj of item.cast; let i = index">    
+                <button mat-icon-button (click)="removeActor(i)" class="mr-10">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                {{obj}}
+            </mat-list-item>
+            
+            <mat-list-item *ngIf="!item.cast || item.cast.length == 0">
+                No items found 
+            </mat-list-item>
+        </mat-list>
+        
+        
+        
+        <mat-form-field class="full-width mt-20">
+            <mat-select placeholder="FilmMaker" class="full-width" #filmMaker='ngModel' [(ngModel)]="item.filmMaker" name="filmMaker" id="filmMaker" required>
+                 <mat-option *ngFor="let item of listFilmMaker" value="{{item._id}}">
+                   {{item._id}}
+                </mat-option>
+           </mat-select>
+        </mat-form-field>   
+        
+        
+        
+
+
+        <!-- BUTTON BAR -->
+        <div class="mt-40">
+            <button mat-raised-button color="primary" class="pull-right mr-5" (click)="save(easyForm.valid, item)">Save</button>
+            <button mat-raised-button class="pull-right " (click)="goBack()">Back To List</button>
+        </div>
+    </form>
+
+</mat-card>
